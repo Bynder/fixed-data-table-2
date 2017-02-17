@@ -59,6 +59,12 @@ var FixedDataTableRowImpl = React.createClass({
     scrollLeft: PropTypes.number.isRequired,
 
     /**
+     * The max scrollLeft value possible. Used to determine whether to show
+     * right-fixed column shadow.
+     */
+    maxScrollX: PropTypes.number.isRequired,
+
+    /**
      * Width of the row.
      */
     width: PropTypes.number.isRequired,
@@ -164,7 +170,30 @@ var FixedDataTableRowImpl = React.createClass({
       />;
     var scrollableColumnsWidth = this._getColumnsWidth(this.props.scrollableColumns);
     var columnsRightShadow = this._renderColumnsRightShadow(fixedColumnsWidth + scrollableColumnsWidth);
-
+    
+    var rightFixedColumns;
+    var rightColumnsShadow;
+    if(this.props.rightFixedColumns.length > 0) {
+      var rightFixedColumnsWidth =
+      this._getColumnsWidth(this.props.rightFixedColumns);
+      rightFixedColumns = (
+        <FixedDataTableCellGroup
+            key="right_fixed_cells"
+            height={this.props.height}
+            left={0}
+            offsetLeft={this.props.width - rightFixedColumnsWidth}
+            width={rightFixedColumnsWidth}
+            zIndex={2}
+            columns={this.props.rightFixedColumns}
+            data={this.props.data}
+            onColumnResize={this.props.onColumnResize}
+            rowHeight={this.props.height}
+            rowIndex={this.props.index}
+            rightFixed={true}
+          />
+        );
+        rightColumnsShadow = this._renderRightColumnsShadow(rightFixedColumnsWidth);
+      }
     return (
       <div
         className={joinClasses(className, this.props.className)}
@@ -176,8 +205,10 @@ var FixedDataTableRowImpl = React.createClass({
         style={style}>
         <div className={cx('fixedDataTableRowLayout/body')}>
           {fixedColumns}
+          {rightFixedColumns}
           {scrollableColumns}
           {columnsLeftShadow}
+          {rightColumnsShadow}
         </div>
         {columnsRightShadow}
       </div>
@@ -215,6 +246,24 @@ var FixedDataTableRowImpl = React.createClass({
         'public/fixedDataTableRow/columnsRightShadow'
       );
       var style = {
+        height: this.props.height
+      };
+      return <div className={className} style={style} />;
+    }
+  },
+    
+  _renderRightColumnsShadow(/*number*/ right) /*?object*/ {
+    if (right > 0) {
+      var className = cx({
+        'fixedDataTableRowLayout/rightFixedColumnsDivider': true,
+        'fixedDataTableRowLayout/columnsShadow': this.props.scrollLeft <
+        this.props.maxScrollX,
+        'public/fixedDataTableRow/rightFixedColumnsDivider': true,
+        'public/fixedDataTableRow/rightColumnsShadow': this.props.scrollLeft <
+        this.props.maxScrollX,
+      });
+      var style = {
+        right: - this.props.width + right,
         height: this.props.height
       };
       return <div className={className} style={style} />;

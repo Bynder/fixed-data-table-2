@@ -79,6 +79,13 @@ Controls if the column is fixed when scrolling in the X axis.
 type: `bool`
 defaultValue: `false`
 
+### `fixedPosition`
+
+Fixes the column on the right side
+
+type: `string`
+defaultValue: `left`
+
 
 ### `headerRenderer`
 

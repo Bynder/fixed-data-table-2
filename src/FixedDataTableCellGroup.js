@@ -42,6 +42,8 @@ var FixedDataTableCellGroupImpl = React.createClass({
     left: PropTypes.number,
 
     onColumnResize: PropTypes.func,
+    
+    rightFixed: PropTypes.bool,
 
     onColumnReorder: PropTypes.func,
     onColumnReorderMove: PropTypes.func,
@@ -83,6 +85,7 @@ var FixedDataTableCellGroupImpl = React.createClass({
             currentPosition - props.left <= props.width &&
             currentPosition - props.left + columnProps.width >= 0)) {
         var key = columnProps.columnKey || 'cell_' + i;
+        var borderLeft = props.rightFixed && i===0;
         cells[i] = this._renderCell(
           props.rowIndex,
           props.rowHeight,
@@ -90,7 +93,8 @@ var FixedDataTableCellGroupImpl = React.createClass({
           currentPosition,
           key,
           contentWidth,
-          isColumnReordering
+          isColumnReordering,
+          borderLeft,
         );
       }
       currentPosition += columnProps.width;
@@ -120,6 +124,7 @@ var FixedDataTableCellGroupImpl = React.createClass({
     /*string*/ key,
     /*number*/ columnGroupWidth,
     /*boolean*/ isColumnReordering,
+    /*bool*/ borderLeft,
   ) /*object*/ {
 
     var cellIsResizable = columnProps.isResizable &&
@@ -149,6 +154,7 @@ var FixedDataTableCellGroupImpl = React.createClass({
         columnKey={columnProps.columnKey}
         width={columnProps.width}
         left={left}
+        borderLeft={borderLeft}
         cell={columnProps.cell}
         columnGroupWidth={columnGroupWidth}
       />

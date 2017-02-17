@@ -34,6 +34,12 @@ var FixedDataTableColumnGroup = React.createClass({
     fixed: PropTypes.bool,
 
     /**
+     * Controls if the column group is fixed at the left or the right of the
+     * table.
+     */
+    fixedPosition: PropTypes.oneOf(['left', 'right']),
+
+    /**
      * This is the header cell for this column group.
      * This can either be a string or a React element. Passing in a string
      * will render a default footer cell with that string. By default, the React
@@ -62,6 +68,7 @@ var FixedDataTableColumnGroup = React.createClass({
   getDefaultProps() /*object*/ {
     return {
       fixed: false,
+      fixedPosition: 'left',
     };
   },
 

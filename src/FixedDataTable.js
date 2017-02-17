@@ -470,7 +470,9 @@ var FixedDataTable = React.createClass({
           zIndex={1}
           offsetTop={0}
           scrollLeft={state.scrollX}
+          maxScrollX={state.maxScrollX}
           fixedColumns={state.groupHeaderFixedColumns}
+          rightFixedColumns={state.groupHeaderRightFixedColumns}
           scrollableColumns={state.groupHeaderScrollableColumns}
           onColumnResize={this._onColumnResize}
           onColumnReorder={onColumnReorder}
@@ -561,8 +563,10 @@ var FixedDataTable = React.createClass({
           zIndex={1}
           offsetTop={footOffsetTop}
           fixedColumns={state.footFixedColumns}
+          rightFixedColumns={state.footRightFixedColumns}
           scrollableColumns={state.footScrollableColumns}
           scrollLeft={state.scrollX}
+          maxScrollX={state.maxScrollX}
         />;
     }
 
@@ -582,7 +586,9 @@ var FixedDataTable = React.createClass({
         zIndex={1}
         offsetTop={headerOffsetTop}
         scrollLeft={state.scrollX}
+        maxScrollX={state.maxScrollX}
         fixedColumns={state.headFixedColumns}
+        rightFixedColumns={state.headRightFixedColumns}
         scrollableColumns={state.headScrollableColumns}
         onColumnResize={this._onColumnResize}
         onColumnReorder={onColumnReorder}
@@ -661,6 +667,7 @@ var FixedDataTable = React.createClass({
         firstRowIndex={state.firstRowIndex}
         firstRowOffset={state.firstRowOffset}
         fixedColumns={state.bodyFixedColumns}
+        rightFixedColumns={state.bodyRightFixedColumns}
         height={state.bodyHeight}
         offsetTop={offsetTop}
         onRowClick={state.onRowClick}
@@ -674,6 +681,7 @@ var FixedDataTable = React.createClass({
         rowHeightGetter={state.rowHeightGetter}
         rowKeyGetter={state.rowKeyGetter}
         scrollLeft={state.scrollX}
+        maxScrollX={state.maxScrollX}
         scrollableColumns={state.bodyScrollableColumns}
         showLastRowBorder={true}
         width={state.width}
@@ -840,31 +848,39 @@ var FixedDataTable = React.createClass({
     var columnInfo = {};
     if (canReuseColumnSettings) {
       columnInfo.bodyFixedColumns = oldState.bodyFixedColumns;
+      columnInfo.bodyRightFixedColumns = oldState.bodyRightFixedColumns;
       columnInfo.bodyScrollableColumns = oldState.bodyScrollableColumns;
       columnInfo.headFixedColumns = oldState.headFixedColumns;
+      columnInfo.headRightFixedColumns = oldState.headRightFixedColumns;
       columnInfo.headScrollableColumns = oldState.headScrollableColumns;
       columnInfo.footFixedColumns = oldState.footFixedColumns;
+      columnInfo.footRightFixedColumns = oldState.footRightFixedColumns;
       columnInfo.footScrollableColumns = oldState.footScrollableColumns;
     } else {
       var bodyColumnTypes = this._splitColumnTypes(columns);
       columnInfo.bodyFixedColumns = bodyColumnTypes.fixed;
+      columnInfo.bodyRightFixedColumns = bodyColumnTypes.rightFixed;
       columnInfo.bodyScrollableColumns = bodyColumnTypes.scrollable;
 
       var headColumnTypes = this._splitColumnTypes(
         this._selectColumnElement(HEADER, columns)
       );
       columnInfo.headFixedColumns = headColumnTypes.fixed;
+      columnInfo.headRightFixedColumns = headColumnTypes.rightFixed;
       columnInfo.headScrollableColumns = headColumnTypes.scrollable;
 
       var footColumnTypes = this._splitColumnTypes(
         this._selectColumnElement(FOOTER, columns)
       );
       columnInfo.footFixedColumns = footColumnTypes.fixed;
+      columnInfo.footRightFixedColumns = footColumnTypes.rightFixed;
       columnInfo.footScrollableColumns = footColumnTypes.scrollable;
     }
 
     if (canReuseColumnGroupSettings) {
       columnInfo.groupHeaderFixedColumns = oldState.groupHeaderFixedColumns;
+      columnInfo.groupHeaderRightFixedColumns =
+        oldState.groupHeaderRightFixedColumns;
       columnInfo.groupHeaderScrollableColumns =
         oldState.groupHeaderScrollableColumns;
     } else {
@@ -873,6 +889,8 @@ var FixedDataTable = React.createClass({
           this._selectColumnElement(HEADER, columnGroups)
         );
         columnInfo.groupHeaderFixedColumns = groupHeaderColumnTypes.fixed;
+        columnInfo.groupHeaderRightFixedColumns =
+          groupHeaderColumnTypes.rightFixed;
         columnInfo.groupHeaderScrollableColumns =
           groupHeaderColumnTypes.scrollable;
       }
@@ -1124,16 +1142,22 @@ var FixedDataTable = React.createClass({
 
   _splitColumnTypes(/*array*/ columns) /*object*/ {
     var fixedColumns = [];
+    var rightFixedColumns = [];
     var scrollableColumns = [];
     for (var i = 0; i < columns.length; ++i) {
       if (columns[i].props.fixed) {
-        fixedColumns.push(columns[i]);
+        if(columns[i].props.fixedPosition === 'right') {
+          rightFixedColumns.push(columns[i]);
+        } else {
+          fixedColumns.push(columns[i]);
+        }
       } else {
         scrollableColumns.push(columns[i]);
       }
     }
     return {
       fixed: fixedColumns,
+      rightFixed: rightFixedColumns,
       scrollable: scrollableColumns,
     };
   },
