@@ -9,9 +9,11 @@ How to edit the plugin
 * clone this repository and cd to it
 * run `npm run site-dev-server` in your terminal
 * go to http://0.0.0.0:8080/webpack-dev-server/ and open examples to see the preview
-* you can work on the styles in "src/css", it will recompile and reload on save
+* work on the styles in "src/css", it will recompile and reload on save
 * create a pr (on Bynder forked branch, not the original one)
 
+General Info
+------------
 FixedDataTable is a React component for building and presenting data in a flexible, powerful way. It supports standard table features, like headers, columns, rows, header groupings, and both fixed-position and scrolling columns.
 
 The table was designed to handle thousands of rows of data without sacrificing performance. Scrolling smoothly is a first-class goal of FixedDataTable and it's architected in a way to allow for flexibility and extensibility.
