@@ -115,7 +115,8 @@ var FixedDataTableCellDefault = _React2.default.createClass({
         _React2.default.createElement(
           'div',
           {
-            className: (0, _joinClasses2.default)((0, _cx2.default)('fixedDataTableCellLayout/wrap3'), (0, _cx2.default)('public/fixedDataTableCell/wrap3')) },
+            className: (0, _joinClasses2.default)((0, _cx2.default)('fixedDataTableCellLayout/wrap3'), (0, _cx2.default)('public/fixedDataTableCell/wrap3')),
+            style: innerStyle },
           _React2.default.createElement(
             'div',
             { className: (0, _cx2.default)('public/fixedDataTableCell/cellContent') },
