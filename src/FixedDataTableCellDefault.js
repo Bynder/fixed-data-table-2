@@ -75,13 +75,13 @@ var FixedDataTableCellDefault = React.createClass({
 
   render() {
     //Remove some props like columnKey and rowIndex so we don't pass it into the div
-    var {height, width, style, className, children, columnKey, rowIndex, ...props} = this.props;
-
-    var innerStyle = {
-      height,
-      width,
-      ...style,
-    };
+    var {height, width, style, parentStyle, className, children, columnKey, rowIndex, ...props} = this.props;
+    
+    // var innerStyle = {
+    //   height,
+    //   width,
+    //   ...style,
+    // };
 
     return (
       <div
@@ -91,18 +91,19 @@ var FixedDataTableCellDefault = React.createClass({
           cx('public/fixedDataTableCell/wrap1'),
           className,
         )}
-        style={innerStyle}>
+        style={parentStyle}>
         <div
           className={joinClasses(
             cx('fixedDataTableCellLayout/wrap2'),
             cx('public/fixedDataTableCell/wrap2'),
-          )}>
+          )}
+          style={parentStyle}>
           <div
             className={joinClasses(
               cx('fixedDataTableCellLayout/wrap3'),
               cx('public/fixedDataTableCell/wrap3'),
             )}
-            style={innerStyle}>
+            style={parentStyle}>
             <div className={cx('public/fixedDataTableCell/cellContent')}>
               {children}
             </div>
