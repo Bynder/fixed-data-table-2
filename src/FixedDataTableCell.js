@@ -255,6 +255,7 @@ var FixedDataTableCell = React.createClass({
     if (props.rowIndex >= 0) {
       cellProps.rowIndex = props.rowIndex;
     }
+    cellProps.parentStyle = style;
 
     var content;
     if (React.isValidElement(props.cell)) {

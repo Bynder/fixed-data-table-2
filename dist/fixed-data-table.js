@@ -5968,6 +5968,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (props.rowIndex >= 0) {
 	      cellProps.rowIndex = props.rowIndex;
 	    }
+	    cellProps.parentStyle = style;
 
 	    var content;
 	    if (_React2.default.isValidElement(props.cell)) {
@@ -6098,31 +6099,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	        height = _props.height,
 	        width = _props.width,
 	        style = _props.style,
+	        parentStyle = _props.parentStyle,
 	        className = _props.className,
 	        children = _props.children,
 	        columnKey = _props.columnKey,
 	        rowIndex = _props.rowIndex,
-	        props = _objectWithoutProperties(_props, ['height', 'width', 'style', 'className', 'children', 'columnKey', 'rowIndex']);
+	        props = _objectWithoutProperties(_props, ['height', 'width', 'style', 'parentStyle', 'className', 'children', 'columnKey', 'rowIndex']);
 
-	    var innerStyle = _extends({
-	      height: height,
-	      width: width
-	    }, style);
+	    // var innerStyle = {
+	    //   height,
+	    //   width,
+	    //   ...style,
+	    // };
 
 	    return _React2.default.createElement(
 	      'div',
 	      _extends({}, props, {
 	        className: (0, _joinClasses2.default)((0, _cx2.default)('fixedDataTableCellLayout/wrap1'), (0, _cx2.default)('public/fixedDataTableCell/wrap1'), className),
-	        style: innerStyle }),
+	        style: parentStyle }),
 	      _React2.default.createElement(
 	        'div',
 	        {
-	          className: (0, _joinClasses2.default)((0, _cx2.default)('fixedDataTableCellLayout/wrap2'), (0, _cx2.default)('public/fixedDataTableCell/wrap2')) },
+	          className: (0, _joinClasses2.default)((0, _cx2.default)('fixedDataTableCellLayout/wrap2'), (0, _cx2.default)('public/fixedDataTableCell/wrap2')),
+	          style: parentStyle },
 	        _React2.default.createElement(
 	          'div',
 	          {
 	            className: (0, _joinClasses2.default)((0, _cx2.default)('fixedDataTableCellLayout/wrap3'), (0, _cx2.default)('public/fixedDataTableCell/wrap3')),
-	            style: innerStyle },
+	            style: parentStyle },
 	          _React2.default.createElement(
 	            'div',
 	            { className: (0, _cx2.default)('public/fixedDataTableCell/cellContent') },
