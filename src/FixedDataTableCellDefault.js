@@ -101,7 +101,8 @@ var FixedDataTableCellDefault = React.createClass({
             className={joinClasses(
               cx('fixedDataTableCellLayout/wrap3'),
               cx('public/fixedDataTableCell/wrap3'),
-            )}>
+            )}
+            style={innerStyle}>
             <div className={cx('public/fixedDataTableCell/cellContent')}>
               {children}
             </div>
